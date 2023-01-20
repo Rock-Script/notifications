@@ -1,0 +1,22 @@
+{
+  "name": "notifications",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha --timeout=10000 --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rock-Script/notifications.git"
+  },
+  "author": "Yogesh Murdeshwar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rock-Script/notifications/issues"
+  },
+  "homepage": "https://github.com/Rock-Script/notifications#readme",
+  "dependencies": {
+    "template": "./template"
+  }
+}
