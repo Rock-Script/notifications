@@ -8,6 +8,7 @@ const routes = [
         path: `${path}/send`,
         method: ROUTE_METHODS.POST,
         validation: {
+            body: NotificationSchema.SEND_NOTIFICATION_BODY
         },
         handler: NotificationController.send
     }
