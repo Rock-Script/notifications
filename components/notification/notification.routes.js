@@ -2,7 +2,7 @@ const NotificationController = require('./notification.controller');
 const NotificationSchema = require('./notification.schema');
 const ROUTE_METHODS = require('../../template/contants/route-methods.const');
 
-const path = '/notification';
+const path = '/notifications';
 const routes = [
     {
         path: `${path}/send`,
