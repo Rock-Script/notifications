@@ -8,5 +8,8 @@ module.exports.SEND_NOTIFICATION_BODY = {
     sms_template_id: ObjectId().optional(),
     push_notification_template_id: ObjectId().optional(),
     data: Joi.any().required(),
-    reciever_member_ids: Joi.array().items(ObjectId()).min(1).required()
+    reciever_ids: Joi.array().items({
+        _id: ObjectId(),
+        type: Joi.string().valid('user', 'member')
+    }).min(1).required()
 }

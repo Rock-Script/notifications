@@ -17,10 +17,20 @@ const verifyParams = async(params) => {
         }
     }
 
-    if (params.reciever_member_ids) {
-        params.reciever_members = await ReferenceTool.getMembers({_ids: params.reciever_member_ids });
-        if (params.reciever_member_ids.length !== params.reciever_members.length) {
-            throw HTTP_RESPONSES.NOT_FOUND('members', params.reciever_member_ids);
+    if (params.reciever_ids) {
+        const member_ids = [], user_ids = [];
+        params.reciever_ids.forEach(m => {
+            if (m.type === 'member') member_ids.push(m._id);
+            if (m.type === 'user') user_ids.push(m._id);
+        })
+        params.reciever_members = await ReferenceTool.getMembers({_ids: member_ids });
+        if (member_ids.length !== params.reciever_members.length) {
+            throw HTTP_RESPONSES.NOT_FOUND('members', member_ids);
+        }
+
+        params.reciever_users = await ReferenceTool.getUsers({_ids: user_ids });
+        if (user_ids.length !== params.reciever_users.length) {
+            throw HTTP_RESPONSES.NOT_FOUND('users', user_ids);
         }
     }
 
@@ -29,7 +39,7 @@ const verifyParams = async(params) => {
 
 module.exports.send = async(params) => {
     params = await verifyParams(params);
-    const to = params.reciever_members.map(m => m.email);
+    const to = [...(params.reciever_members || []), ...(params.reciever_users || [])].map(m => m.email);
     const subject = stringSubstitutions(params.email_template.subject, params.data);
     const text = stringSubstitutions(params.email_template.text, params.data);
     const html = stringSubstitutions(params.email_template.html, params.data);
